@@ -1,17 +1,16 @@
 package life.yuanma.community.controller;
 
 import life.yuanma.community.mapper.QuestionMapper;
-import life.yuanma.community.mapper.UserMapper;
 import life.yuanma.community.model.Question;
 import life.yuanma.community.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -22,8 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 public class PublishController {
     @Autowired
     private QuestionMapper questionMapper;
-    @Autowired
-    private UserMapper userMapper;
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable(name = "id")Integer id){
+        return "publish";
+    }
 
     @GetMapping("/publish")
     public String publish() {
@@ -54,19 +55,7 @@ public class PublishController {
             return "publish";
         }
 
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null && cookies.length != 0)
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("token")){
-                String token = cookie.getValue();
-                user = userMapper.findByToken(token);
-                if (user != null){
-                    request.getSession().setAttribute("user", user);
-                }
-                break;
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
         if (user ==null){
             model.addAttribute("error","用户未登录");
             return "publish";
