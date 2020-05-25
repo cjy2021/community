@@ -1,0 +1,1 @@
+alter table COMMENT alter column "Parent_id" rename to parent_id;
