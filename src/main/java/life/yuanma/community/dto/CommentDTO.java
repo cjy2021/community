@@ -1,14 +1,22 @@
 package life.yuanma.community.dto;
 
+import life.yuanma.community.model.User;
 import lombok.Data;
 
 /**
  * @author yd
- * @date 2020/5/24 20:26
+ * @date 2020/5/25 21:22
  */
 @Data
 public class CommentDTO {
-    private Long parentId;
-    private String content;
-    private Integer type;
+
+        private Long id;
+        private Long parentId;
+        private Integer type;
+        private Long commentator;
+        private Long gmtCreate;
+        private Long gmtModified;
+        private Long likeCount;
+        private String content;
+        private User user;
 }

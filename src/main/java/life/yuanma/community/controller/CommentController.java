@@ -1,9 +1,8 @@
 package life.yuanma.community.controller;
 
-import life.yuanma.community.dto.CommentDTO;
+import life.yuanma.community.dto.CommentCreateDTO;
 import life.yuanma.community.dto.ResultDTO;
 import life.yuanma.community.exception.CustomizeErrorCode;
-import life.yuanma.community.mapper.CommentMapper;
 import life.yuanma.community.model.Comment;
 import life.yuanma.community.model.User;
 import life.yuanma.community.service.CommentService;
@@ -28,15 +27,15 @@ public class CommentController {
     private CommentService commentService;
     @ResponseBody
     @RequestMapping(value = "/comment",method = RequestMethod.POST)
-    public Object post(@RequestBody CommentDTO commentDTO,
+    public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request){
         User user =(User) request.getSession().getAttribute("user");
         if (user == null){
             return ResultDTO.errorOf(CustomizeErrorCode.NO_LOGIN);}
         Comment comment = new Comment();
-        comment.setParentId(commentDTO.getParentId());
-        comment.setContent(commentDTO.getContent());
-        comment.setType(commentDTO.getType());
+        comment.setParentId(commentCreateDTO.getParentId());
+        comment.setContent(commentCreateDTO.getContent());
+        comment.setType(commentCreateDTO.getType());
         comment.setGmtModified(System.currentTimeMillis());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setCommentator(user.getId());
@@ -44,6 +43,6 @@ public class CommentController {
         commentService.insert(comment);
         Map<Object, Object> objectObjectHashMap = new HashMap<>();
         objectObjectHashMap.put("messgae","成功");
-        return objectObjectHashMap;
+        return ResultDTO.okOf();
     }
 }

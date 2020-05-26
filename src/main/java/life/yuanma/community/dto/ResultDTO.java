@@ -1,6 +1,7 @@
 package life.yuanma.community.dto;
 
 import life.yuanma.community.exception.CustomizeErrorCode;
+import life.yuanma.community.exception.CustomizeException;
 import lombok.Data;
 
 /**
@@ -21,5 +22,15 @@ public class ResultDTO {
 
     public static ResultDTO errorOf(CustomizeErrorCode errorCode) {
         return errorOf(errorCode.getCode(),errorCode.getMessage());
+    }
+    public static ResultDTO errorOf(CustomizeException e) {
+        return errorOf(e.getCode(),e.getMessage());
+    }
+
+    public static ResultDTO okOf(){
+        ResultDTO resultDTO =new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("请求成功");
+        return resultDTO;
     }
 }
