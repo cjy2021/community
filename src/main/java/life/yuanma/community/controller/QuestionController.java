@@ -1,8 +1,8 @@
 package life.yuanma.community.controller;
 
-import life.yuanma.community.dto.CommentCreateDTO;
 import life.yuanma.community.dto.CommentDTO;
 import life.yuanma.community.dto.QuestionDTO;
+import life.yuanma.community.enums.CommentTypeEnum;
 import life.yuanma.community.service.CommentService;
 import life.yuanma.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class QuestionController {
                            Model model){
         QuestionDTO questionDTO = questionService.getById(id);
 
-        List<CommentDTO> comments = commentService.listByQuestionId(id);
+        List<CommentDTO> comments = commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         //累加阅读数
         questionService.incView(id);
         model.addAttribute("question",questionDTO);

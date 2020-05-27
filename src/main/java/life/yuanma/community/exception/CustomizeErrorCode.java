@@ -11,6 +11,7 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
     SYS_ERROR(2004,"服务异常，请稍后再试！"),
     TYPE_PARAM_WRONG(2005,"评论类型错误或不存在！"),
     COMMENT_NOT_FOUND(2006,"回复的评论不在了，可以换个试试！"),
+    CONTENT_IS_EMPTY(2007,"输入内容为空！"),
     ;
 
     @Override
